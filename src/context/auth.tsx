@@ -21,7 +21,6 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  // const router = useRouter();
   
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: any) => {
@@ -29,19 +28,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const appUser = JSON.parse(parsedUser);
     
       if (user) {
-        // console.log('user',user);
-        
         return setUser(appUser);
       } 
-      // else {
-      //   setUser(null);
-      // }
       setLoading(false);
     });
 
-    // return () => unsubscribe();
   }, []);
-  // console.log('user',user);
 
   const signInWithGoogle = async () => {
     try {
@@ -50,18 +42,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const token = credential?.accessToken;
       const user = result.user;
               setUser(user);
-              console.log('user',user.uid);
-              
               const objUser ={
                 name:user.displayName,
                 email:user.email,
                 userId:user.uid
               }
-              // localStorage.setItem('user', JSON.stringify(user));
               localStorage.setItem('user', JSON.stringify(objUser));
 
-      // console.log('user', user);
-      // router.push('/todos');
     } catch (error: any) {
       console.error('Failed to sign in with Google', error);
     }
@@ -74,7 +61,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
               setUser(null);
 
-      // router.push('/');
     } catch (error) {
       console.error('Failed to sign out', error);
     }
