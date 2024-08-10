@@ -2,6 +2,8 @@
 import { useAuth } from "@/context/auth";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import Link from 'next/link'
+
 import Head from "next/head";
 import { useEffect } from "react";
 
@@ -84,6 +86,11 @@ export default function Home() {
   </p>
 </div>
       </div>
+      <div className="m-2">
+      <Link href="/about">
+        About <span className="text-violet-500">Muhumuza</span> AI</Link>
+        
+        </div>
     </main>
   );
 }
