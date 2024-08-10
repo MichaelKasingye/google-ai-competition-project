@@ -32,7 +32,6 @@ const LoadingDots = () => {
 
     return () => clearInterval(timer);
   }, []);
-console.log('countdown',countdown);
 
   return (
     <div className="flex items-center text-slate-400">
