@@ -5,6 +5,7 @@ interface ChatMessage {
   text: string;
 }
 
+
 interface ChatHistoryProps {
   chatHistory: ChatMessage[] | any;
 }
