@@ -39,6 +39,7 @@ export default function Home() {
       ...oldHistory,
       { role: "user", content: message },
     ]);
+    
     setMessage("");
     setLoading(true);
     fetch("/api/chat", {
