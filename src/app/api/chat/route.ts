@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const resChain = await chain(userId);
 
   const res = await resChain.conversationChain.invoke({
-    word: `I am called ${body.user.name} and ${question} `,
+    word: `user is called ${body.user.name} and and is asking ${question} `,
   });
   const resMemory: any = resChain.viewMemoryHistory;
 

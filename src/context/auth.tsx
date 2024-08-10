@@ -1,15 +1,14 @@
 "use client"
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-// import { useRouter } from 'next/router';
 import { auth, provider } from '@/config/firebaseConfig';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 
 interface AuthContextProps {
   user: any;
   loading: boolean;
+  checkGoogleSignIn:() => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
-  // appUser:any~
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -39,6 +38,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
+      
       const token = credential?.accessToken;
       const user = result.user;
               setUser(user);
@@ -54,6 +54,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const checkGoogleSignIn = async () => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // User is signed in.
+        const providerId = await user.providerData[0]?.providerId;
+        
+        if (providerId === 'google.com') {
+          setUser({
+            name:user.displayName,
+            email:user.email,
+            userId:user.uid
+          });
+        } else {
+          alert("User is signed in, but not with Google");
+        }
+      } else {
+        alert("No user is signed in");
+      }
+    });
+  };
+
   const signOut = async () => {
     try {
       await auth.signOut();
@@ -67,7 +88,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{user, loading, signInWithGoogle, signOut }}>
+    <AuthContext.Provider value={{user, loading, signInWithGoogle, signOut,checkGoogleSignIn }}>
       {children}
     </AuthContext.Provider>
   );
