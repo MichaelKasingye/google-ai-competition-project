@@ -3,7 +3,6 @@ import { useAuth } from "@/context/auth";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
   const router:any = useRouter();
 
   const handleSignIn = async () => {
-    console.log("button pressed");
     await signInWithGoogle();
   };
 
@@ -32,7 +30,7 @@ export default function Home() {
       <div className="hero-section flex flex-col items-center justify-center text-center bg-gradient-to-b p-0 rounded-lg shadow-lg w-full">
         <h1 className="text-4xl font-bold mb-4"> <span className="text-violet-500">Hello, </span>Welcome to Huhumuza AI</h1>
         <p className="text-xl mb-8">Your friendly mental well-being AI Friend</p>
-        <button className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30" onClick={handleSignIn}>
+        <button className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 hover:border-violet-500 hover:bg-gray-100 hover:dark:border-violet-500 hover:dark:bg-neutral-800/30" onClick={handleSignIn}>
           Get started
         </button>
       </div>

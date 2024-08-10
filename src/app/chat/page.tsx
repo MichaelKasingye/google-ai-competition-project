@@ -2,6 +2,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Send } from "react-feather";
 import { useRouter } from "next/navigation";
+import Link from 'next/link'
+import ReactMarkdown from 'react-markdown';
 
 import { ChatMessage, Message } from "../../../types/message";
 import LoadingDots from "@/components/LoadingDots";
@@ -17,7 +19,7 @@ const convertHistory = (oldHistory: { [key: string]: string }[] | any) => {
 };
 
 export default function Home() {
-  const { user, signInWithGoogle, signOut } = useAuth();
+  const { user, signInWithGoogle, signOut, checkGoogleSignIn } = useAuth();
   const [message, setMessage] = useState<string | any>("");
   const [preChats, setPreChats] = useState<string | any>("");
   const [history, setHistory] = useState<Message[] | any>([
@@ -31,7 +33,12 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const [showModal, setShowModal] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push('/');
+
+  };
 
   const handleClick = () => {
     if (message == "") return;
@@ -39,7 +46,8 @@ export default function Home() {
       ...oldHistory,
       { role: "user", content: message },
     ]);
-    
+
+
     setMessage("");
     setLoading(true);
     fetch("/api/chat", {
@@ -72,6 +80,25 @@ export default function Home() {
       return formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
     }
   };
+  
+  
+  useEffect(() => {
+     checkGoogleSignIn()
+    const checkUserStatus = async () => {
+      if (!user) {
+        try {
+          const userLogged = await checkGoogleSignIn();
+        } catch (error) {
+          console.error("Error checking Google sign-in:", error);
+
+        }
+      }
+    };
+  
+    checkUserStatus();
+  
+    // return () => {   };
+  }, []);
 
   //scroll to bottom of chat
   useEffect(() => {
@@ -84,9 +111,17 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between  bg-zinc-800/30">
       <div className="flex flex-col gap-8 w-full items-center flex-grow max-h-full">
         <div className="flex items-center justify-between md:px-[200px] w-full mt-3">
-          <h1 className=" text-4xl text-white font-extralight bg-clip-text mx-3">
+          <h1 className=" text-3xl text-white font-extralight bg-clip-text mx-3">
             Muhumuza AI
           </h1>
+        
+
+          <div className="flex items-center justify-center">
+                <button className=" flex w-[90px] justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 p-1 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 hover:border-violet-500 hover:bg-gray-100 hover:dark:border-violet-500 hover:dark:bg-neutral-800/30" onClick={handleSignOut}>
+        SignOut
+        </button>
+            </div>
+
         </div>
         <form
           className="border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30  flex-grow flex flex-col "
@@ -95,11 +130,7 @@ export default function Home() {
             handleClick();
           }}
         >
-          <div className=" flex items-center justify-center bg-gray-100">
-            <Modal showModal={showModal} setShowModal={setShowModal}>
-              <ChatHistory chatHistory={[...preChats]} />
-            </Modal>
-          </div>
+        
 
           <div className="flex flex-col gap-5 py-10 h-full">
             <div className="w-auto max-w-xl break-words bg-white rounded-b-xl rounded-tr-xl p-6 border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
@@ -131,7 +162,8 @@ export default function Home() {
                         <p className="text-sm font-medium text-violet-500 mb-2">
                           Muhumuza
                         </p>
-                        {message.content}
+                        <ReactMarkdown>{message.content}</ReactMarkdown>
+                        
                       </div>
                     </div>
                   );
@@ -155,7 +187,7 @@ export default function Home() {
               <div ref={lastMessageRef} className="flex gap-2">
                 <div className="w-auto max-w-xl break-words bg-white rounded-b-xl rounded-tr-xl p-6 border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
                   <img
-                    src="images/assistant-avatar.png"
+                    src="images/ai_bot4.jpeg"
                     className="h-12 w-12 rounded-full"
                   />
                   <p className="text-sm font-medium text-violet-500 mb-4">
@@ -169,7 +201,8 @@ export default function Home() {
 
           {/* input area */}
           <div className="flex sticky bottom-0 w-full ">
-            <div className="flex items-center justify-center w-full relative">
+            {user?
+           ( <div className="flex items-center justify-center w-full relative">
               <textarea
                 aria-label="chat input"
                 value={message}
@@ -195,7 +228,14 @@ export default function Home() {
               >
                 <Send />
               </button>
-            </div>
+            </div>)
+            :
+          (  <div className="flex items-center justify-center min-w-[320px] relative">
+                <button className=" flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 hover:border-violet-500 hover:bg-gray-100 hover:dark:border-violet-500 hover:dark:bg-neutral-800/30" >
+        <Link href="/">Hey Friend! Sign up</Link>
+        </button>
+            </div>)
+            }
           </div>
         </form>
       </div>
