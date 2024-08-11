@@ -3,16 +3,19 @@ import { useAuth } from "@/context/auth";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function About() {
   const { user, signInWithGoogle, signOut } = useAuth();
   const auth = getAuth();
   const router:any = useRouter();
+  const [loading, setloading] = useState<boolean>(false);
 
   const handleSignIn = async () => {
-    await signInWithGoogle();
-  };
+    setloading(true)
+
+    const signIn = await signInWithGoogle();
+    setloading(false)  };
 
   useEffect(() => {
     if (user) {
@@ -72,7 +75,7 @@ export default function About() {
 
       <div className="flex flex-col items-center justify-center mt-8">
         <button className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30 hover:border-violet-500 hover:bg-gray-100 hover:dark:border-violet-500 hover:dark:bg-neutral-800/30" onClick={handleSignIn}>
-          Get Started
+        {loading?"loading...": "Get started"}  
         </button>
         <div className="m-2">
         (Resarch source: <a href="https://www.usatoday.com/money/blueprint/health-insurance/mental-health-statistics/" target="_blank" className="text-violet-500 hover:underline">USA Today</a>), 
