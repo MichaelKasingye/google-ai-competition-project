@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           alert("User is signed in, but not with Google");
         }
       } else {
-        alert("No user is signed in");
+        console.error("No user is signed in");
       }
     });
   };
