@@ -106,7 +106,7 @@ export default function Home() {
         <br/>
         <br/>
         <Link href="mailto:muhumuza.ai.system@gmail.com">
-        Contact <span className="text-violet-500">muhumuza.ai.system@gmail.com</span> AI
+        Contact <span className="text-violet-500">muhumuza.ai.system@gmail.com</span>
         </Link>
       </div>
     </main>
