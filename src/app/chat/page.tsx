@@ -69,14 +69,11 @@ export default function Home() {
   };
 
   const formatPageName = (url: string) => {
-    // Split the URL by "/" and get the last segment
     const pageName = url.split("/").pop();
 
-    // Split by "-" and then join with space
     if (pageName) {
       const formattedName = pageName.split("-").join(" ");
 
-      // Capitalize only the first letter of the entire string
       return formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
     }
   };
@@ -97,7 +94,6 @@ export default function Home() {
   
     checkUserStatus();
   
-    // return () => {   };
   }, []);
 
   //scroll to bottom of chat
