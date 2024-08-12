@@ -94,7 +94,7 @@ export default function Home() {
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none"></span>
           </h2>
           <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Huhumuza AI understands and shares your feelings, offering
+            Huhumuza AI understands and shares your feelings offering
             empathy.
           </p>
         </div>
@@ -102,6 +102,11 @@ export default function Home() {
       <div className="m-2">
         <Link href="/about">
           About <span className="text-violet-500">Muhumuza</span> AI
+        </Link>
+        <br/>
+        <br/>
+        <Link href="mailto:muhumuza.ai.system@gmail.com">
+        Contact <span className="text-violet-500">muhumuza.ai.system@gmail.com</span> AI
         </Link>
       </div>
     </main>
