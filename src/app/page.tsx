@@ -31,17 +31,17 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <Head>
-        <title>Huhumuza AI - Your Mental Wellness Friend</title>
+        <title>Muhumuza AI - Your Mental Wellness Friend</title>
         <meta
           name="description"
-          content="Huhumuza AI - Your friendly mental well-being AI friend."
+          content="Muhumuza AI - Your friendly mental well-being AI friend."
         />
       </Head>
 
       <div className="hero-section flex flex-col items-center justify-center text-center bg-gradient-to-b p-0 rounded-lg shadow-lg w-full">
         <h1 className="text-4xl font-bold mb-4">
           {" "}
-          <span className="text-violet-500">Hello, </span>Welcome to Huhumuza AI
+          <span className="text-violet-500">Hello, </span>Welcome to Muhumuza AI
         </h1>
         <p className="text-xl mb-8">
           Your friendly mental well-being AI Friend
@@ -62,7 +62,7 @@ export default function Home() {
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none"></span>
           </h2>
           <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Huhumuza AI is designed to be a friendly companion for your mental
+          Muhumuza AI is designed to be a friendly companion for your mental
             well-being.
           </p>
         </div>
@@ -94,7 +94,7 @@ export default function Home() {
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none"></span>
           </h2>
           <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Huhumuza AI understands and shares your feelings offering
+          Muhumuza AI understands and shares your feelings offering
             empathy.
           </p>
         </div>
