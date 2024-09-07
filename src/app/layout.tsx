@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-// import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/auth";
 
-// const inter = Inter({ subsets: ["latin"] });
-
+import { Analytics } from "@vercel/analytics/react"
 export const metadata: Metadata = {
   title: "Muhumuza Ai",
   description: "Your Friendly Chatbot",
@@ -19,10 +17,11 @@ export default function RootLayout({
     <html lang="en">
             <AuthProvider>
 
-      {/* <body className={inter.className}>{children}</body> */}
-      <body className="">{children}</body>
+      <body className="">
+        {children}
+      <Analytics/>
+        </body>
       </AuthProvider>
-
     </html>
   );
 }
